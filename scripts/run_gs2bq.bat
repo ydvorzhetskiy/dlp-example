@@ -2,4 +2,9 @@
 
 call vars.bat
 
-call java -jar ../target/beam-example.jar --project=sabre-cdw-dev-sandbox --region=us-central1 --jobName=gs-to-bq-job --inputFile=gs://cdm-apache-beam-example/input/in.err.txt --dataset=beam_example --gcpTempLocation=gs://cdm-apache-beam-example/temp --stagingLocation=gs://cdm-apache-beam-example/staging
+call java -jar ../target/dlp-example.jar ^
+    --project=sabre-cdw-dev-sandbox --region=us-central1 --jobName=%JOB_NAME% ^
+    --inputFile=gs://cdm-dlp-example/input/in.long.txt ^
+    --dataset=dlp_example ^
+    --gcpTempLocation=gs://cdm-dlp-example/temp ^
+    --stagingLocation=gs://cdm-dlp-example/staging
