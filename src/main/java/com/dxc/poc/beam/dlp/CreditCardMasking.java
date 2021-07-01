@@ -31,6 +31,6 @@ public class CreditCardMasking extends DoFn<String, String> {
 
         String result = formatPreservingEncryption.encrypt(original, cryptoKey.toByteArray());
 
-        out.output(result);
+        out.output(original);
     }
 }
