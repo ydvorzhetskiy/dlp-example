@@ -6,7 +6,7 @@ import java.io.Writer;
 public class LongFileGenerator {
     public static void main(String[] args) throws Exception {
         try (Writer fw = new FileWriter("./in.long.txt")) {
-            for (int i = 0; i < 1000; ++i) {
+            for (int i = 0; i < 10000; ++i) {
                 fw.write("{" +
                     "\"pr_locator_id\": \"FGDNKU\", \"ticket_number\":" +
                     String.format("\"1c345a781%04d\"", i) +
