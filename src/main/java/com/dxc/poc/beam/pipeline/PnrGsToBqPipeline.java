@@ -23,11 +23,11 @@ public class PnrGsToBqPipeline {
         val result = Pipeline.create(options)
             .apply("Read JSON from file",
                 TextIO.read().from(options.getInputFile()))
-            .apply("DLP record",
-                withElapsedTime("mask_card_number", ParDo.of(new CreditCardMasking())))
             .apply("Parse JSON to DTO",
                 withElapsedTime("parse_json", ParseJsons.of(Pnr.class)))
             .setCoder(SerializableCoder.of(Pnr.class))
+            .apply("DLP record",
+                withElapsedTime("mask_card_number", ParDo.of(new CreditCardMasking())))
             .apply("Convert to table row",
                 withElapsedTime("to_table_row_milliseconds", ParDo.of(new ToTableRowDoFn())))
             .apply("Write to BQ", BigQueryIO.writeTableRows()
