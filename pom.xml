@@ -69,15 +69,11 @@
             <version>3.12.0</version>
         </dependency>
 
-        <!-- Secret Manager -->
+        <!--FPE -->
         <dependency>
-            <groupId>com.google.cloud</groupId>
-            <artifactId>google-cloud-secretmanager</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>30.1.1-jre</version>
+            <groupId>com.sabre.gcp</groupId>
+            <artifactId>fpe</artifactId>
+            <version>1.1</version>
         </dependency>
 
         <dependency>
@@ -85,11 +81,6 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.idealista</groupId>
-            <artifactId>format-preserving-encryption</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

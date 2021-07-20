@@ -2,6 +2,8 @@ package com.dxc.poc.beam.pipeline;
 
 import com.dxc.poc.beam.dlp.CreditCardMasking;
 import com.dxc.poc.beam.dto.Pnr;
+import com.sabre.gcp.fpe.FieldType;
+import com.sabre.gcp.fpe.Fpe;
 import lombok.val;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.coders.SerializableCoder;
@@ -26,8 +28,16 @@ public class PnrGsToBqPipeline {
             .apply("Parse JSON to DTO",
                 withElapsedTime("parse_json", ParseJsons.of(Pnr.class)))
             .setCoder(SerializableCoder.of(Pnr.class))
-            .apply("DLP record",
-                withElapsedTime("mask_card_number", ParDo.of(new CreditCardMasking())))
+            .apply("Encrypt Record",
+                ParDo.of(
+                    Fpe.of(
+                        "projects/652835946224/secrets/dxcSandbox_SecretForFpe/versions/latest",
+                        FieldType.ALPHA_NUMERIC,
+                        Pnr::getTicketNumber,
+                        Pnr::setTicketNumber
+                    )
+                )
+            )
             .apply("Convert to table row",
                 withElapsedTime("to_table_row_milliseconds", ParDo.of(new ToTableRowDoFn())))
             .apply("Write to BQ", BigQueryIO.writeTableRows()
